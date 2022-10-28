@@ -1,5 +1,11 @@
 class Tests:
 
+    def allTests(self, bits, validateLen=True):
+        self.singleBit(bits)
+        self.series(bits)
+        self.longSeries(bits)
+        self.poker(bits)
+
     def singleBit(self, bits, validateLen=True):
         if validateLen:
             assert len(bits) == 20_000
