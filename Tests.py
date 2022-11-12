@@ -1,9 +1,13 @@
 class Tests:
 
     def allTests(self, bits, validateLen=True):
+        print("Single bit")
         self.singleBit(bits)
+        print("Series")
         self.series(bits)
+        print("Long series")
         self.longSeries(bits)
+        print("Poker")
         self.poker(bits)
 
     def singleBit(self, bits, validateLen=True):
@@ -13,6 +17,7 @@ class Tests:
         for bit in bits:
             if bit == 1:
                 countBit1 += 1
+        print("countBit1", countBit1)
         assert 9_725 < countBit1 < 10_275
 
     def series(self, bits, validateLen=True):
@@ -35,6 +40,9 @@ class Tests:
                 currentContext = bit
                 currentLen = 1
 
+        print("zeros lens", zerosLengths)
+        print("ones lens", onesLengths)
+
         assert 2_315 <= zerosLengths[1] <= 2_685
         assert 1_114 <= zerosLengths[2] <= 1_386
         assert 527 <= zerosLengths[3] <= 723
@@ -53,15 +61,19 @@ class Tests:
         if validateLen:
             assert len(bits) == 20_000
 
+        max_series_len = 0
+
         currentContext = bits[0]
         currentLen = 0
         for idx, bit in enumerate(bits):
             if bit == currentContext:
                 currentLen += 1
+                max_series_len = max(max_series_len, currentLen)
             elif bit != currentContext:
                 currentContext = bit
                 currentLen = 1
-        assert currentLen < 26
+            assert currentLen < 26
+        print(max_series_len)
 
     def poker(self, bits, validateLen=True):
         dict = {}
@@ -75,4 +87,6 @@ class Tests:
                 currCount = dict.get(fragment, 0)
                 dict[fragment] = currCount + 1
         x = (16 / 5000) * sum(pow(n, 2) for n in dict.values()) - 5000
+
+        print("x", x)
         assert 2.16 < x < 46.17

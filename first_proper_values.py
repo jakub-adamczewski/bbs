@@ -17,6 +17,7 @@ def bbs_test(p, q):
     bits_list.append(bits)
 
     try:
+        print("Tests started.")
         tests.allTests(bits)
         print("Passed!", p, q, bbs.n)
         print_by_lines(bits_list[-1], 100)
@@ -27,6 +28,7 @@ def bbs_test(p, q):
 
 # Test which checks first p and q values, for which FIPS tests are passed
 generator = PQGenerator()
-observer = Observer(on_next=lambda arg: bbs_test(arg[0], arg[1]))
+# observer = Observer(on_next=lambda arg: bbs_test(arg[0], arg[1]))
+observer = Observer(on_next=lambda arg: print(arg))
 generator.subject.observers.append(observer)
-generator.generate(1_000_000)
+generator.generate(10_000_000_000)
